@@ -1,0 +1,24 @@
+{
+  "name": "acklenavenue-qa-challenge",
+  "version": "1.0.0",
+  "description": "Acklen QA challange repo",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RGaldamez/AcklenAvenue-QA-Challenge.git"
+  },
+  "author": "Ricardo Galdamez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RGaldamez/AcklenAvenue-QA-Challenge/issues"
+  },
+  "homepage": "https://github.com/RGaldamez/AcklenAvenue-QA-Challenge#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.0",
+    "selenium-webdriver": "^4.0.0-alpha.7"
+  }
+}
