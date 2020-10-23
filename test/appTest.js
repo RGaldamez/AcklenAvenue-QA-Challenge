@@ -51,6 +51,96 @@ describe('Selenium automated functional tests', function(){
             result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
             assert.equal(result, '$ 12.00');  
         });
+
+        it('Select valet parking for 6 hours, cost should be $18', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Valet Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/23/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('5:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/23/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('11:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            assert.equal(result, '$ 18.00');  
+        });
+
+        it('Selecting 3 days of valet parking, cost should be $54', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Valet Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/25/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            assert.equal(result, '$ 54.00');  
+        });
+
+        it('Input letters in the date and time boxes, no PHP warnings should appear', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Valet Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('ASDasdjaskduqwjsi');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('GASHDHASDGASJDH');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('asdasdasdqwd');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('asdqweq3tesgfsdf');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//b')).getText();
+            assert.isUndefined(result, 'php warnings found');  
+        });
     });
 
 
