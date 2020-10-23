@@ -276,9 +276,12 @@ describe('Selenium automated functional tests', function(){
             result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
             assert.equal(result, '$ 61.00');  
         });
+        
+    });
+    describe('Economy Parking tests', async ()=>{
         it('Economy parking for 4 hours and 59 minutes, cost should be $9 or under ', async ()=>{
 
-            await driver.findElement(By.name('ParkingLot')).sendKeys('Short-Term Parking');
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Economy Parking');
             entryDate = await driver.findElement(By.name('StartingDate'));
             entryDate.clear();
             entryDate.sendKeys('10/22/2020');
@@ -306,9 +309,47 @@ describe('Selenium automated functional tests', function(){
             result = result.replace('$','');
             result = parseFloat(result);
             assert.isAtMost(result, 9.00);
-            assert  
+            
+        });
+        it('Economy parking for 24 hours, cost should be $9', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Economy Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/23/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            result = result.replace('$','');
+            result = parseFloat(result);
+            assert.equal(result, 9.00);
+            
         });
     });
+    describe('Long-Term Garage Parking tests' , async ()=>{
+
+    });
+    describe('Long-Term Surface Parking tests', async ()=>{
+        
+    })
 
     
 
