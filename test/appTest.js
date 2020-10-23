@@ -95,6 +95,41 @@ describe('Selenium automated functional tests', function(){
             result = await driver.findElement(By.xpath('//td[@class="SubHead"]/b')).getText();
             assert.equal(result, 'ERROR! YOUR LEAVING DATE OR TIME IS BEFORE YOUR STARTING DATE OR TIME');  
         });
+        it('Reserving a parking spot for 0 hours, no cost should appear or cost should be $0', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Valet Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/23/2020');
+            await driver.sleep(INPUT_TIME);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(INPUT_TIME);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/23/2020');
+            await driver.sleep(INPUT_TIME);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(INPUT_TIME);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(PAGE_LOADING_TIME);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            if (result){
+                result = result.replace('$','');
+                result = parseFloat(result);
+                assert.equal(result,0);
+            }else{
+                assert.isUndefined(result, "A cost should not be displayed unless it is $0" );
+            }
+        });
     });
 
     describe('Valet Parking Tests', async ()=>{
