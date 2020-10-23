@@ -218,6 +218,64 @@ describe('Selenium automated functional tests', function(){
             result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
             assert.equal(result, '$ 2.00');  
         });
+        it('Selecting 5 hours of Short-Term Parking, cost should be $10', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Short-Term Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/23/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('1:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/23/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('6:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            assert.equal(result, '$ 10.00');  
+        });
+        it('Selecting 2 days, 6 hours and 29 minutes of Short-Term Parking, cost should be $61', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Short-Term Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/24/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('6:29');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            assert.equal(result, '$ 61.00');  
+        });
     });
 
     
