@@ -214,11 +214,17 @@ describe("Selenium automated functional tests", function () {
       result = await driver
         .findElement(By.xpath('//span[@class="SubHead"]/b'))
         .getText();
-      result2 = await driver
-        .findElement(By.xpath('//td[@class="SubHead"]/b'))
-        .getText();
       assert.equal(result, "$ 0.00");
-      assert.isDefined(result2, "An Error should be prompted with wrong time");
+
+      result2 = await driver
+        .findElement(By.xpath('//span[@class="BodyCopy"]/b'))
+        .getText();
+      result2 = result2.search("-");
+      assert.equal(
+        result2,
+        -1,
+        "There should not be a negative sign in the time."
+      );
     });
   });
 
