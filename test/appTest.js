@@ -50,7 +50,7 @@ describe("Selenium automated functional tests", function () {
       await driver.sleep(PAGE_LOADING_TIME);
 
       result = await driver.findElement(By.xpath("//b")).getText();
-      assert.isUndefined(result, "php warnings found");
+      assert.isEmpty(result, "php warnings found");
     });
 
     it("Press calculate with default values, user friendly error should show and no php warnings ", async () => {
@@ -58,7 +58,7 @@ describe("Selenium automated functional tests", function () {
       await driver.sleep(PAGE_LOADING_TIME);
 
       result = await driver.findElement(By.xpath("//b")).getText();
-      assert.isUndefined(result, "php warnings found");
+      assert.isEmpty(result, "php warnings found");
       result = await driver
         .findElement(By.xpath('//span[@class="SubHead"]/b'))
         .getText();
