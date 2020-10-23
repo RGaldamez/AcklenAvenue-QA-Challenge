@@ -11,7 +11,7 @@ let entryDate, entryTime,leavingDate,leavingTime;
 let result ,result2;
 
 describe('Selenium automated functional tests', function(){
-    // Unit tests should usually last INPUT_TIME0ms so I am increasing the timeout
+    // Unit tests should usually last 2000ms so I am increasing the timeout
     // to allow selenium to perform the tests
     this.timeout(TEST_TIMEOUT);
 
@@ -164,6 +164,44 @@ describe('Selenium automated functional tests', function(){
             
             result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
             assert.equal(result, '$ 18.00');  
+        });
+
+        it('Setting entry time after leaving time', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Valet Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/23/2020');
+            await driver.sleep(INPUT_TIME);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(INPUT_TIME);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/23/2020');
+            await driver.sleep(INPUT_TIME);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(INPUT_TIME);
+
+            await driver.findElement(By.xpath('//input[@name="StartingTimeAMPM"][@value="PM"]')).click();
+            await driver.sleep(INPUT_TIME);
+            await driver.findElement(By.xpath('//input[@name="LeavingTimeAMPM"][@value="AM"]')).click();
+            await driver.sleep(INPUT_TIME);
+
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(PAGE_LOADING_TIME);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            result2 = await driver.findElement(By.xpath('//td[@class="SubHead"]/b')).getText();
+            assert.equal(result, '$ 0.00');  
+            assert.isDefined(result2, 'An Error should be prompted with wrong time');
         });
         
     });
