@@ -440,7 +440,165 @@ describe('Selenium automated functional tests', function(){
         });
     });
     describe('Long-Term Garage Parking tests' , async ()=>{
-        
+        it('Long-Term Garage Parking for 6 hours and 59 minutes, cost should be $12 or under ', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Garage Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('6:59');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            result = result.replace('$','');
+            result = parseFloat(result);
+            assert.isAtMost(result, 12.00);
+            
+        });
+        it('Long-Term Garage Parking for 24 hours , cost should be $12 ', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Garage Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/23/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            result = result.replace('$','');
+            result = parseFloat(result);
+            assert.equal(result, 12.00);
+            
+        });
+        it('Long-Term Garage Parking for 31 days, cost should be $324', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Garage Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/1/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('11/1/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            result = result.replace('$','');
+            result = parseFloat(result);
+            assert.equal(result, 324.00);
+            
+        });
+        it('Comparing 6 days of Long-Term Garage Parking with 7, should be the same cost ($72)', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Garage Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/29/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            result = result.replace('$','');
+            result = parseFloat(result);
+
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Garage Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/28/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result2 = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            result2 = result2.replace('$','');
+            result2 = parseFloat(result2);
+            
+            assert.equal(result,result2);
+            
+            
+        });
     });
     describe('Long-Term Surface Parking tests', async ()=>{
 
