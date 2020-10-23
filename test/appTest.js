@@ -10,7 +10,7 @@ let resultContainer, result;
 describe('Selenium automated functional tests', function(){
     // Unit tests usually last 2000ms so I am increasing the timeout
     // to allow selenium to perform the tests
-    this.timeout(40000);
+    this.timeout(100000);
 
     before(async ()=>{
         driver = await new Builder().forBrowser('chrome').build();
@@ -141,8 +141,48 @@ describe('Selenium automated functional tests', function(){
             result = await driver.findElement(By.xpath('//b')).getText();
             assert.isUndefined(result, 'php warnings found');  
         });
-    });
 
+        it('Press calculate with default values, user friendly error should show and no php warnings ', async ()=>{
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(500);
+            
+            result = await driver.findElement(By.xpath('//b')).getText();
+            assert.isUndefined(result, 'php warnings found');  
+            result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
+            assert.equal(result, 'ERROR! ENTER A CORRECTLY FORMATTED DATE');
+        });
+
+        it('Put a leaving date that happens before the entry date, app should prompt friendly user error', async ()=>{
+
+            await driver.findElement(By.name('ParkingLot')).sendKeys('Valet Parking');
+            entryDate = await driver.findElement(By.name('StartingDate'));
+            entryDate.clear();
+            entryDate.sendKeys('10/30/2020');
+            await driver.sleep(200);
+
+            entryTime = await driver.findElement(By.name('StartingTime'));
+            entryTime.clear();
+            entryTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            leavingDate = await driver.findElement(By.name('LeavingDate'));
+            leavingDate.clear();
+            leavingDate.sendKeys('10/22/2020');
+            await driver.sleep(200);
+
+            leavingTime = await driver.findElement(By.name('LeavingTime'));
+            leavingTime.clear();
+            leavingTime.sendKeys('12:00');
+            await driver.sleep(200);
+
+            await driver.findElement(By.name('Submit')).click();
+            await driver.sleep(1000);
+            
+            result = await driver.findElement(By.xpath('//td[@class="SubHead"]/b')).getText();
+            assert.equal(result, 'ERROR! YOUR LEAVING DATE OR TIME IS BEFORE YOUR STARTING DATE OR TIME');  
+        });
+    });
 
 
 });
