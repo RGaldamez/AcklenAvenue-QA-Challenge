@@ -25,4 +25,4 @@ This repository shows the creation of the automated tests to display functionali
 ## Notes
 * To create the test cases, I made a test case template in an Excel Worksheet which is included in the repository.
 * Navigate through the test cases in the Excel Worksheet using the bottom menu tabs.
-* Tools used are: [Selenium webdriver](https://www.npmjs.com/package/selenium-webdriver), [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/).
+* Tools used were: [Selenium webdriver](https://www.npmjs.com/package/selenium-webdriver), [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/).
