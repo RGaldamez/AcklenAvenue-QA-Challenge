@@ -604,7 +604,7 @@ describe('Selenium automated functional tests', function(){
         });
     });
     describe('Long-Term Surface Parking tests', async ()=>{
-        it('Long-Term Surface Parking for 6 hours and 59 minutes, cost should be $12 or under ', async ()=>{
+        it('Long-Term Surface Parking for 5 hours and 59 minutes, cost should be $10 or under ', async ()=>{
 
             await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Surface Parking');
             entryDate = await driver.findElement(By.name('StartingDate'));
@@ -624,7 +624,7 @@ describe('Selenium automated functional tests', function(){
 
             leavingTime = await driver.findElement(By.name('LeavingTime'));
             leavingTime.clear();
-            leavingTime.sendKeys('6:59');
+            leavingTime.sendKeys('5:59');
             await driver.sleep(INPUT_TIME);
 
             await driver.findElement(By.name('Submit')).click();
@@ -633,10 +633,10 @@ describe('Selenium automated functional tests', function(){
             result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
             result = result.replace('$','');
             result = parseFloat(result);
-            assert.isAtMost(result, 12.00);
+            assert.isAtMost(result, 10.00);
             
         });
-        it('Long-Term Surface Parking for 24 hours , cost should be $12 ', async ()=>{
+        it('Long-Term Surface Parking for 24 hours , cost should be $10 ', async ()=>{
 
             await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Surface Parking');
             entryDate = await driver.findElement(By.name('StartingDate'));
@@ -665,10 +665,10 @@ describe('Selenium automated functional tests', function(){
             result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
             result = result.replace('$','');
             result = parseFloat(result);
-            assert.equal(result, 12.00);
+            assert.equal(result, 10.00);
             
         });
-        it('Long-Term Surface Parking for 31 days, cost should be $324', async ()=>{
+        it('Long-Term Surface Parking for 31 days, cost should be $270', async ()=>{
 
             await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Surface Parking');
             entryDate = await driver.findElement(By.name('StartingDate'));
@@ -697,10 +697,10 @@ describe('Selenium automated functional tests', function(){
             result = await driver.findElement(By.xpath('//span[@class="SubHead"]/b')).getText();
             result = result.replace('$','');
             result = parseFloat(result);
-            assert.equal(result, 324.00);
+            assert.equal(result, 270.00);
             
         });
-        it('Comparing 6 days of Long-Term Surface Parking with 7, should be the same cost ($72)', async ()=>{
+        it('Comparing 6 days of Long-Term Surface Parking with 7, should be the same cost ($60)', async ()=>{
 
             await driver.findElement(By.name('ParkingLot')).sendKeys('Long-Term Surface Parking');
             entryDate = await driver.findElement(By.name('StartingDate'));
